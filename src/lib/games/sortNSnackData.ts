@@ -92,11 +92,11 @@ const tier3Foods = [
   { food: "Cookie", emoji: "🍪", category: "Kitchen", explanation: "Cookies are baked in the oven!" },
 ];
 
-const usedFoods: { [key: number]: string[] } = {};
-
 const generateTier1Puzzle = (excludeUsed: string[] = []): SortingPuzzle => {
   const availableFoods = tier1Foods.filter(f => !excludeUsed.includes(f.food));
-  const item = availableFoods[Math.floor(Math.random() * availableFoods.length)];
+  // If every food in this tier has been used, fall back to the full list rather than crash.
+  const foodsToUse = availableFoods.length > 0 ? availableFoods : tier1Foods;
+  const item = foodsToUse[Math.floor(Math.random() * foodsToUse.length)];
   // Keep Healthy on left, Not-So-Healthy on right (no shuffle)
   const categories = ["Healthy", "Not-So-Healthy"];
   
@@ -111,7 +111,9 @@ const generateTier1Puzzle = (excludeUsed: string[] = []): SortingPuzzle => {
 
 const generateTier2Puzzle = (excludeUsed: string[] = []): SortingPuzzle => {
   const availableFoods = tier2Foods.filter(f => !excludeUsed.includes(f.food));
-  const item = availableFoods[Math.floor(Math.random() * availableFoods.length)];
+  // If every food in this tier has been used, fall back to the full list rather than crash.
+  const foodsToUse = availableFoods.length > 0 ? availableFoods : tier2Foods;
+  const item = foodsToUse[Math.floor(Math.random() * foodsToUse.length)];
   // Fixed order: Fruit, Vegetable, Dairy, Protein
   const categories = ["Fruit", "Vegetable", "Dairy", "Protein"];
   
@@ -126,7 +128,9 @@ const generateTier2Puzzle = (excludeUsed: string[] = []): SortingPuzzle => {
 
 const generateTier3Puzzle = (excludeUsed: string[] = []): SortingPuzzle => {
   const availableFoods = tier3Foods.filter(f => !excludeUsed.includes(f.food));
-  const item = availableFoods[Math.floor(Math.random() * availableFoods.length)];
+  // If every food in this tier has been used, fall back to the full list rather than crash.
+  const foodsToUse = availableFoods.length > 0 ? availableFoods : tier3Foods;
+  const item = foodsToUse[Math.floor(Math.random() * foodsToUse.length)];
   // Fixed order: Plants, Animals, Factory, Kitchen
   const categories = ["Plants", "Animals", "Factory", "Kitchen"];
   
