@@ -117,7 +117,7 @@ export const WordWichGame = ({ tier, onGameEnd, onPlayAgain }: WordWichGameProps
       });
 
       if (round >= maxRounds) {
-        handleGameComplete(correctCount + 1, !fastestWord || timeLeft > fastestWord.timeRemaining ? { word: puzzle.word, timeRemaining: timeLeft } : fastestWord);
+        handleGameComplete(correctCount + 1, !fastestWord || timeLeft > fastestWord.timeRemaining ? { word: puzzle.word, timeRemaining: timeLeft } : fastestWord, score + points);
       } else {
         setRound(round + 1);
         loadNextPuzzle(usedWords);
@@ -127,9 +127,9 @@ export const WordWichGame = ({ tier, onGameEnd, onPlayAgain }: WordWichGameProps
       toast.error("Not quite right! Try again!", {
         description: `The word was: ${puzzle.word}`,
       });
-      
+
       if (round >= maxRounds) {
-        handleGameComplete(correctCount, fastestWord);
+        handleGameComplete(correctCount, fastestWord, score);
       } else {
         setRound(round + 1);
         loadNextPuzzle(usedWords);
@@ -137,14 +137,14 @@ export const WordWichGame = ({ tier, onGameEnd, onPlayAgain }: WordWichGameProps
     }
   };
 
-  const handleGameComplete = (finalCorrect: number, finalFastest: FastestWord | null) => {
+  const handleGameComplete = (finalCorrect: number, finalFastest: FastestWord | null, finalScore: number) => {
     const maxScore = maxRounds * (tier * 2 + 5 + TIMER_DURATION); // Include max time bonus
-    const percentage = Math.min(100, (score / maxScore) * 100);
-    
+    const percentage = Math.min(100, (finalScore / maxScore) * 100);
+
     addCompletion({
       gameId: "word-wich",
       tier,
-      score,
+      score: finalScore,
       maxScore,
       percentage,
     });
