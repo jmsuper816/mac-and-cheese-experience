@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { FallingFood, generateFoods, checkCollision } from "@/lib/games/snackAttackData";
 import { useNavigate } from "react-router-dom";
 import { useGameProgress } from "@/contexts/GameProgressContext";
+import { getGameThreshold } from "@/lib/games/gameThresholds";
 import macCheeseDefault from "@/assets/characters/mac-cheese-default.webp";
 import macCheeseAvocado from "@/assets/characters/mac-cheese-avocado.webp";
 import macCheeseBurger from "@/assets/characters/mac-cheese-burger.webp";
@@ -42,13 +43,6 @@ export const SnackAttackGame = ({ tier, onBack }: SnackAttackGameProps) => {
   const animationFrameRef = useRef<number>();
   const lastTimeRef = useRef<number>(0);
 
-  // Point thresholds for stickers based on tier
-  const pointThresholds: Record<number, number> = {
-    1: 100, // Snack Starter
-    2: 100, // Food Fighter
-    3: 100, // Reflex Master
-  };
-
   const outfitImages: Record<string, string> = {
     default: macCheeseDefault,
     burger: macCheeseBurger,
@@ -66,7 +60,9 @@ export const SnackAttackGame = ({ tier, onBack }: SnackAttackGameProps) => {
 
   const spawnRate = tier === 1 ? 2000 : tier === 2 ? 1500 : 1000;
   const fallSpeed = tier === 1 ? 0.08 : tier === 2 ? 0.12 : 0.16;
-  const targetScore = pointThresholds[tier] || 150;
+  // Derive the sticker goal from the same thresholds the sticker book checks against,
+  // so the in-game "you unlocked a sticker!" toast can never disagree with reality.
+  const targetScore = getGameThreshold("snack-attack")?.tiers[tier as 1 | 2 | 3]?.threshold ?? 150;
 
   const handleGameEnd = useCallback((finalScoreVal: number) => {
     if (gameEnded) return;
