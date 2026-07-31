@@ -84,39 +84,6 @@ const tier2Words = [
   { word: "spatula", syllables: ["spat", "u", "la"], hint: "flips food in pan" },
 ];
 
-const tier3Words = [
-  { word: "applesauce", syllables: ["ap", "ple", "sauce"], hint: "smooth apple puree" },
-  { word: "marshmallow", syllables: ["marsh", "mal", "low"], hint: "soft fluffy white candy" },
-  { word: "tater tots", syllables: ["ta", "ter", "tots"], hint: "crispy potato bites" },
-  { word: "banana", syllables: ["ba", "na", "na"], hint: "yellow curved fruit" },
-  { word: "spaghetti", syllables: ["spa", "ghet", "ti"], hint: "long pasta noodles" },
-  { word: "chocolate", syllables: ["choc", "o", "late"], hint: "sweet brown treat" },
-  { word: "strawberry", syllables: ["straw", "ber", "ry"], hint: "red berry with seeds" },
-  { word: "blueberry", syllables: ["blue", "ber", "ry"], hint: "tiny blue fruit" },
-  { word: "raspberry", syllables: ["rasp", "ber", "ry"], hint: "red bumpy berry" },
-  { word: "pineapple", syllables: ["pine", "ap", "ple"], hint: "tropical spiky fruit" },
-  { word: "hamburger", syllables: ["ham", "bur", "ger"], hint: "beef patty in bun" },
-  { word: "broccoli", syllables: ["broc", "co", "li"], hint: "green tree vegetable" },
-  { word: "cucumber", syllables: ["cu", "cum", "ber"], hint: "green crunchy veggie" },
-  { word: "tomato", syllables: ["to", "ma", "to"], hint: "red sauce ingredient" },
-  { word: "potato", syllables: ["po", "ta", "to"], hint: "makes fries and chips" },
-  { word: "tortilla", syllables: ["tor", "til", "la"], hint: "flat bread for wraps" },
-  { word: "cinnamon", syllables: ["cin", "na", "mon"], hint: "warm brown spice" },
-  { word: "vanilla", syllables: ["va", "nil", "la"], hint: "sweet flavor from beans" },
-  { word: "celery", syllables: ["cel", "er", "y"], hint: "crunchy green stalk" },
-  { word: "artichoke", syllables: ["ar", "ti", "choke"], hint: "veggie with leaves" },
-  { word: "zucchini", syllables: ["zuc", "chi", "ni"], hint: "green summer squash" },
-  { word: "granola", syllables: ["gra", "no", "la"], hint: "crunchy oat clusters" },
-  { word: "cereal", syllables: ["cer", "e", "al"], hint: "breakfast in a bowl" },
-  { word: "honeydew", syllables: ["hon", "ey", "dew"], hint: "green sweet melon" },
-  { word: "tangerine", syllables: ["tan", "ger", "ine"], hint: "small sweet orange" },
-  { word: "coconut", syllables: ["co", "co", "nut"], hint: "tropical hairy fruit" },
-  { word: "barbecue", syllables: ["bar", "be", "cue"], hint: "grilled smoky food" },
-  { word: "seasoning", syllables: ["sea", "son", "ing"], hint: "spices for flavor" },
-  { word: "beverage", syllables: ["bev", "er", "age"], hint: "any kind of drink" },
-  { word: "lemonade", syllables: ["lem", "on", "ade"], hint: "sweet yellow drink" },
-];
-
 const tier4Words = [
   { word: "measuring cup", syllables: ["mea", "sur", "ing", "cup"], hint: "pour and measure with this" },
   { word: "cookie cutter", syllables: ["cook", "ie", "cut", "ter"], hint: "shapes dough" },
@@ -140,7 +107,7 @@ const tier4Words = [
   { word: "chicken nugget", syllables: ["chick", "en", "nug", "get"], hint: "breaded bite-sized dipper" },
   { word: "peanut butter", syllables: ["pea", "nut", "but", "ter"], hint: "spread for sandwiches" },
   { word: "measuring spoon", syllables: ["mea", "sur", "ing", "spoon"], hint: "small kitchen scoop" },
-  { word: "potato salad", syllables: ["po", "ta", "to", "sal", "ad"], hint: "cold creamy side dish" },
+  { word: "potato chips", syllables: ["po", "ta", "to", "chips"], hint: "crunchy salty snack" },
   { word: "banana bread", syllables: ["ba", "na", "na", "bread"], hint: "sweet fruit loaf" },
   { word: "banana split", syllables: ["ba", "na", "na", "split"], hint: "ice cream sundae" },
   { word: "chocolate milk", syllables: ["choc", "o", "late", "milk"], hint: "brown sweet drink" },
@@ -162,8 +129,6 @@ export const generateWordPuzzle = (tier: DifficultyTier, usedWords: string[] = [
     wordList = tier1Words;
   } else if (tier === 2) {
     wordList = tier2Words;
-  } else if (tier === 3) {
-    wordList = tier3Words;
   } else {
     wordList = tier4Words;
   }
