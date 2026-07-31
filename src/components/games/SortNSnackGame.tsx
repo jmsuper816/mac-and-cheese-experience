@@ -68,10 +68,10 @@ export const SortNSnackGame = ({ tier, onBack }: SortNSnackGameProps) => {
     }
   }, [timeLeft, showFeedback, showFactDialog, showSummary]);
 
-  const loadNewPuzzle = () => {
-    const newPuzzle = generateSortingPuzzle(tier, usedFoods);
+  const loadNewPuzzle = (excludeUsed: string[] = usedFoods) => {
+    const newPuzzle = generateSortingPuzzle(tier, excludeUsed);
     setPuzzle(newPuzzle);
-    setUsedFoods([...usedFoods, newPuzzle.food]);
+    setUsedFoods([...excludeUsed, newPuzzle.food]);
     setSelectedCategory(null);
     setShowFeedback(false);
     setTimeLeft(SPEED_BONUS_TIME);
@@ -350,17 +350,18 @@ export const SortNSnackGame = ({ tier, onBack }: SortNSnackGameProps) => {
               >
                 Back to Levels
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   setShowSummary(false);
                   setCurrentRound(1);
                   setScore(0);
                   setStreak(0);
                   setCorrectAnswers(0);
-                  setUsedFoods([]);
-                  loadNewPuzzle();
-                }} 
-                size="lg" 
+                  // Pass the reset list explicitly — loadNewPuzzle's own setUsedFoods call
+                  // would otherwise overwrite this with a stale (pre-reset) closure value.
+                  loadNewPuzzle([]);
+                }}
+                size="lg"
                 className="flex-1"
               >
                 Play Again
