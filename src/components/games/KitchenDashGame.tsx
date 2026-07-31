@@ -4,6 +4,7 @@ import { ArrowLeft, RotateCcw, Smartphone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsMobile, useIsPortrait } from "@/hooks/use-mobile";
+import { useGameProgress } from "@/contexts/GameProgressContext";
 import { RecipeData, DifficultyTier } from "@/lib/games/recipes/recipeTypes";
 import kitchenBg from "@/assets/kitchen/kitchen-bg.png";
 import jellySplatImg from "@/assets/kitchen/jelly-toast/jelly-splat.webp";
@@ -20,6 +21,7 @@ export const KitchenDashGame = ({ recipe, difficulty, onBack, onChangeDifficulty
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const isPortrait = useIsPortrait();
+  const { addCompletion } = useGameProgress();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
@@ -111,8 +113,20 @@ export const KitchenDashGame = ({ recipe, difficulty, onBack, onChangeDifficulty
     } else {
       setShowSuccess(true);
       toast.success(`🎉 ${recipe.name} Complete!`, { duration: 2000 });
+      // Kitchen Dash has no partial-credit scoring — finishing a recipe is always 100%.
+      // Progress tier combines recipe.tier (1-2, authored per recipe) with difficulty
+      // so all 3 sticker-book tiers (Junior/Sous/Master Chef) are reachable using
+      // the existing recipe data, without requiring a third in-game difficulty option.
+      const progressTier = Math.min(3, recipe.tier + (difficulty === "master" ? 1 : 0));
+      addCompletion({
+        gameId: "kitchen-dash",
+        tier: progressTier,
+        score: recipe.steps.length,
+        maxScore: recipe.steps.length,
+        percentage: 100,
+      });
     }
-  }, [currentStep, recipe]);
+  }, [currentStep, recipe, difficulty, addCompletion]);
 
   const showWrongFeedback = useCallback(() => {
     setWrongItem(true);
