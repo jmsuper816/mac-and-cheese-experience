@@ -34,7 +34,7 @@ const GoogleAnalyticsTracker = () => {
 
   useEffect(() => {
     if (typeof window.gtag === "function") {
-      window.gtag("event", "page_view", {
+      window.gtag("config", "G-TQPKGPGCQP", {
         page_path: location.pathname + location.search,
         page_location: window.location.href,
       });
